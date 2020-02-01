@@ -2,14 +2,14 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const DefaultErrorMessage = 'The operation was cancelled.';
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 module.exports = class OperationCancellationError extends Error
 {
-	constructor (message = DefaultErrorMessage)
+	constructor (message = 'The operation was cancelled.')
 	{
 		super(message);
+
+		Object.defineProperty(this, 'name', {
+			configurable : true, writable : true, value : 'OperationCancellationError'
+		});
 	}
 };
