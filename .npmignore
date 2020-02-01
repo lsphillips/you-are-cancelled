@@ -1,0 +1,17 @@
+# Files
+# -----------------
+
+.npmrc
+.eslintrc
+.editorconfig
+.gitignore
+
+# Travis
+# -----------------
+
+.travis.yml
+
+# Directories
+# -----------------
+
+/tests

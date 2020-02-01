@@ -1,0 +1,65 @@
+{
+	"name" : "you-are-cancelled",
+
+	"version" : "1.0.0",
+
+	"description" : "An implementation of the cooperative cancellation model that is heavily inspired by the .NET implementation.",
+
+	"author" :
+	{
+		"name" : "Luke Phillips",
+		"email" : "lsphillips.mail@gmail.com"
+	},
+
+	"keywords" :
+	[
+		"cancellation",
+		"token",
+		"cancel",
+		"promise"
+	],
+
+	"homepage" : "https://github.com/lsphillips/YouAreCancelled",
+
+	"bugs" :
+	{
+		"url" : "https://github.com/lsphillips/YouAreCancelled/issues"
+	},
+
+	"devDependencies" :
+	{
+        "you-are-cancelled" : "file:.",
+        "chai" : "4.2.0",
+        "chai-as-promised" : "7.1.1",
+        "mocha" : "7.0.1",
+        "sinon" : "8.1.1",
+		"eslint" : "6.8.0",
+		"eslint-plugin-import" : "2.20.0",
+		"eslint-plugin-promise" : "4.2.1",
+		"eslint-config-protect-me-from-my-stupidity" : "5.1.0"
+	},
+
+    "main" : "src/youAreCancelled.js",
+
+	"repository" :
+	{
+		"type" : "git",
+		"url" : "https://github.com/lsphillips/YouAreCancelled.git"
+	},
+
+	"scripts" :
+	{
+		"lint" : "eslint \"src/**/*.js\" \"tests/**/*.js\"",
+		"unit" : "mocha \"tests/**/*.js\"",
+        "test" : "npm run lint && npm run unit"
+	},
+
+	"license" : "MIT",
+
+	"engines" :
+	{
+		"node" : ">=10.0.0"
+	},
+
+	"types" : "youAreCancelled.d.ts"
+}
