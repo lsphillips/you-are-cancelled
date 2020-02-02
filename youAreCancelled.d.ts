@@ -26,7 +26,7 @@ export interface OperationCancellationCallback
 /**
  * Responsible for propogating the cancellation requested by its associative source.
  */
-export interface CancellationToken extends PromiseLike<void>
+export class CancellationToken implements PromiseLike<void>
 {
 	/**
 	 * Indicates whether the token is capable of being in a cancelled state.
@@ -65,6 +65,16 @@ export interface CancellationToken extends PromiseLike<void>
 	 * ```
 	 */
 	throwIfCancellationRequested() : void;
+
+	/**
+	 * @inheritdoc
+	 */
+	then (onFulfilled ?: ((value : void) => any | PromiseLike<any>) | null | undefined, onRejected ?: ((reason : OperationCancellationError) => any | PromiseLike<any>) | null | undefined) : PromiseLike<any>;
+
+	/**
+	 * A dummy token that is not capable of being in a cancelled state.
+	 */
+	static readonly None : CancellationToken;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
