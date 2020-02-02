@@ -24,7 +24,7 @@ export interface OperationCancellationCallback
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /**
- * Responsible for propogating the cancellation requested by its associative source.
+ * Responsible for propagating the cancellation requested by its associative source.
  */
 export class CancellationToken implements PromiseLike<void>
 {
@@ -90,7 +90,7 @@ export class CancellationTokenSource
 	readonly isCancellationRequested : boolean;
 
 	/**
-	 * A unique token that is responsible for propogating the cancellation requested by this source.
+	 * A unique token that is responsible for propagating the cancellation requested by this source.
 	 *
 	 * This is what you pass around to asynchronous operations that can be cancelled.
 	 */

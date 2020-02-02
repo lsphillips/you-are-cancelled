@@ -29,7 +29,7 @@ setTimeout(function ()
 
 ### Cancellation Tokens
 
-The cancellation token is responsible for propogating the cancellation requested by its associative Cancellation Token Source. Every Cancellation Token Source has a unique token associated with it. You will give this token to any asynchronous operation that can be cancelled:
+The cancellation token is responsible for propagating the cancellation requested by its associative Cancellation Token Source. Every Cancellation Token Source has a unique token associated with it. You will give this token to any asynchronous operation that can be cancelled:
 
 ``` js
 await getRecordsFromDatabase(source.token);
