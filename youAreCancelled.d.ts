@@ -43,7 +43,7 @@ export class CancellationToken implements PromiseLike<void>
 	 *
 	 * @param callback A function that you want to be executed when a cancellation has been requested.
 	 */
-	register(callback : OperationCancellationError) : void;
+	register(callback : OperationCancellationCallback) : void;
 
 	/**
 	 * Deregisters a previously registered callback that would execute when a cancellation has been requested.
