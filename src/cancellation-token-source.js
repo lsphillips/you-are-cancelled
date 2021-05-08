@@ -2,8 +2,8 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const CancellationToken          = require('./cancellationToken');
-const OperationCancellationError = require('./operationCancellationError');
+const CancellationToken          = require('./cancellation-token');
+const OperationCancellationError = require('./operation-cancellation-error');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

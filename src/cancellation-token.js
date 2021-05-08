@@ -2,7 +2,7 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const OperationCancellationError = require('./operationCancellationError');
+const OperationCancellationError = require('./operation-cancellation-error');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

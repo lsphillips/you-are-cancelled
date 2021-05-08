@@ -28,7 +28,6 @@
 
 	"devDependencies" :
 	{
-        "you-are-cancelled" : "file:.",
         "chai" : "4.3.4",
         "chai-as-promised" : "7.1.1",
         "mocha" : "8.4.0",
@@ -39,7 +38,7 @@
 		"eslint-config-protect-me-from-my-stupidity" : "7.0.0"
 	},
 
-    "main" : "src/youAreCancelled.js",
+    "main" : "src/you-are-cancelled.js",
 
 	"repository" :
 	{
@@ -62,5 +61,5 @@
 		"node" : ">=12.0.0"
 	},
 
-	"types" : "youAreCancelled.d.ts"
+	"types" : "you-are-cancelled.d.ts"
 }

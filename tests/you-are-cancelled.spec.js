@@ -5,7 +5,7 @@
 const { use, expect }                                                            = require('chai');
 const asPromised                                                                 = require('chai-as-promised');
 const { spy, assert, match }                                                     = require('sinon');
-const { CancellationToken, CancellationTokenSource, OperationCancellationError } = require('you-are-cancelled');
+const { CancellationToken, CancellationTokenSource, OperationCancellationError } = require('../src/you-are-cancelled');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
