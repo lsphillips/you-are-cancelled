@@ -10,5 +10,7 @@
     "parserOptions" :
     {
         "sourceType" : "script"
-    }
+    },
+
+	"root" : true
 }

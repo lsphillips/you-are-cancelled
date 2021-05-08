@@ -19,10 +19,13 @@ class CancellationToken
 		});
 
 		Object.defineProperty(this, 'promise', {
-			value : new Promise((resolve, reject) => this.register(reject))
+			value : new Promise((resolve, reject) =>
+			{
+				this.register(reject);
+			})
 		});
 
-		this.promise.catch(() =>
+		this.promise.catch(() => // eslint-disable-line promise/prefer-await-to-then
 		{
 			// Here to prevent unhandled rejections.
 		});

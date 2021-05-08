@@ -1,7 +1,7 @@
 {
 	"name" : "you-are-cancelled",
 
-	"version" : "1.0.1",
+	"version" : "1.1.0",
 
 	"description" : "An implementation of the cooperative cancellation model that is heavily inspired by the .NET implementation.",
 
@@ -29,14 +29,14 @@
 	"devDependencies" :
 	{
         "you-are-cancelled" : "file:.",
-        "chai" : "4.2.0",
+        "chai" : "4.3.4",
         "chai-as-promised" : "7.1.1",
-        "mocha" : "8.1.0",
-        "sinon" : "9.0.2",
-		"eslint" : "6.8.0",
-		"eslint-plugin-import" : "2.22.0",
-		"eslint-plugin-promise" : "4.2.1",
-		"eslint-config-protect-me-from-my-stupidity" : "5.1.0"
+        "mocha" : "8.4.0",
+        "sinon" : "10.0.0",
+		"eslint" : "7.26.0",
+		"eslint-plugin-import" : "2.22.1",
+		"eslint-plugin-promise" : "5.1.0",
+		"eslint-config-protect-me-from-my-stupidity" : "7.0.0"
 	},
 
     "main" : "src/youAreCancelled.js",
@@ -49,9 +49,9 @@
 
 	"scripts" :
 	{
-		"lint" : "eslint \"src/**/*.js\" \"tests/**/*.js\"",
-		"unit" : "mocha \"tests/**/*.js\"",
-        "test" : "npm run lint && npm run unit",
+		"test:lint" : "eslint \"src/**/*.js\" \"tests/**/*.js\"",
+		"test:unit" : "mocha \"tests/**/*.js\"",
+        "test" : "npm run test:lint && npm run test:unit",
         "prepack" : "npm run test"
 	},
 
@@ -59,7 +59,7 @@
 
 	"engines" :
 	{
-		"node" : ">=10.0.0"
+		"node" : ">=12.0.0"
 	},
 
 	"types" : "youAreCancelled.d.ts"
