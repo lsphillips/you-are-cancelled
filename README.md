@@ -12,16 +12,12 @@ The TL;DR is that there are Cancellation Token Sources where each have a Cancell
 This module can be treated as an ES module:
 
 ``` js
-import * as youAreCancelled from 'you-are-cancelled';
-// or
 import { CancellationTokenSource } from 'you-are-cancelled';
 ```
 
 This module can also be treated as a CommonJS module:
 
 ``` js
-const youAreCancelled = require('you-are-cancelled');
-// or
 const { CancellationTokenSource } = require('you-are-cancelled');
 ```
 
