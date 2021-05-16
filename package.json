@@ -66,9 +66,9 @@
 
     "files" :
     [
-        "README.md",
-        "CHANGELOG.md",
-        "LICENSE.txt",
+        "/README.md",
+        "/CHANGELOG.md",
+        "/LICENSE.txt",
         "/you-are-cancelled.js",
         "/you-are-cancelled.cjs",
         "/you-are-cancelled.es5.js",
