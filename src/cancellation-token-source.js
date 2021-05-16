@@ -1,13 +1,9 @@
-'use strict';
+import CancellationToken          from './cancellation-token.js';
+import OperationCancellationError from './operation-cancellation-error.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const CancellationToken          = require('./cancellation-token');
-const OperationCancellationError = require('./operation-cancellation-error');
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-module.exports = class CancellationTokenSource
+export default class CancellationTokenSource
 {
 	constructor ()
 	{
@@ -33,4 +29,4 @@ module.exports = class CancellationTokenSource
 			new OperationCancellationError(reason)
 		));
 	}
-};
+}

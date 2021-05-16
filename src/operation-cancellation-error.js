@@ -1,8 +1,4 @@
-'use strict';
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-module.exports = class OperationCancellationError extends Error
+export default class OperationCancellationError extends Error
 {
 	constructor (message = 'The operation was cancelled.')
 	{
@@ -12,4 +8,4 @@ module.exports = class OperationCancellationError extends Error
 			configurable : true, writable : true, value : 'OperationCancellationError'
 		});
 	}
-};
+}

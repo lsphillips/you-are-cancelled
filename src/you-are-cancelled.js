@@ -1,14 +1,10 @@
-'use strict';
+import CancellationToken          from './cancellation-token.js';
+import CancellationTokenSource    from './cancellation-token-source.js';
+import OperationCancellationError from './operation-cancellation-error.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const CancellationToken          = require('./cancellation-token');
-const CancellationTokenSource    = require('./cancellation-token-source');
-const OperationCancellationError = require('./operation-cancellation-error');
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-module.exports = {
+export {
 	CancellationToken,
 	CancellationTokenSource,
 	OperationCancellationError

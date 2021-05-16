@@ -1,8 +1,4 @@
-'use strict';
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const OperationCancellationError = require('./operation-cancellation-error');
+import OperationCancellationError from './operation-cancellation-error.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -85,10 +81,8 @@ class CancellationToken
 	}
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 CancellationToken.None = new CancellationToken();
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-module.exports = CancellationToken;
+export default CancellationToken;

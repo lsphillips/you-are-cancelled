@@ -9,6 +9,22 @@ An implementation of the cooperative cancellation model that is heavily inspired
 
 The TL;DR is that there are Cancellation Token Sources where each have a Cancellation Token associated with them. An operation that can be cancelled and spawns one or more async sub-operations would create a Cancellation Token Source and give said sub-operations the resulting Cancellation Token. When interrupted, the operation will request a cancellation using the aforementioned Cancellation Token Source, the associated token will then communicate that cancellation request to all sub-operations allowing them to gracefully abort.
 
+This module can be treated as an ES module:
+
+``` js
+import * as youAreCancelled from 'you-are-cancelled';
+// or
+import { CancellationTokenSource } from 'you-are-cancelled';
+```
+
+This module can also be treated as a CommonJS module:
+
+``` js
+const youAreCancelled = require('you-are-cancelled');
+// or
+const { CancellationTokenSource } = require('you-are-cancelled');
+```
+
 ### Cancellation Token Sources
 
 An operation that can be cancelled and spawns one or more asynchronous sub-operations would create the Cancellation Token Source:
@@ -109,6 +125,14 @@ npm install you-are-cancelled
 ```
 
 ## Development
+
+### Building
+
+You can build UMD and ESM versions of this module that are minified:
+
+``` sh
+npm run build
+```
 
 ### Testing
 

@@ -1,4 +1,17 @@
-# NPM
+# Dependencies
 # -----------------
 
 /node_modules
+
+# Build
+# -----------------
+
+/you-are-cancelled.js
+/you-are-cancelled.cjs
+/you-are-cancelled.es5.js
+/you-are-cancelled.es5.cjs
+
+# Pack
+# -----------------
+
+*.tgz

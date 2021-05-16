@@ -2,6 +2,16 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] (2021-05-16)
+
+### Changed
+
+- This module now exports minified single file entry points, making this package much more lightweight.
+
+### Added
+
+- Introduced ESM and UMD versions of this module, each with an ES5 version for browser environments.
+
 ## [1.1.0] (2021-05-08)
 
 ### Fixed
