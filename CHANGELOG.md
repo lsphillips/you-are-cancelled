@@ -2,6 +2,12 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] (2021-05-16)
+
+### Changed
+
+- The UMD version of this module now exposes itself using the name `you-are-cancelled`.
+
 ## [1.2.0] (2021-05-16)
 
 ### Changed

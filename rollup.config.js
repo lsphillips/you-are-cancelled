@@ -37,7 +37,7 @@ export default
 	bundle({
 		file : 'you-are-cancelled.es5.cjs',
 		format : 'umd',
-		name : 'youAreCancelled',
+		name : 'you-are-cancelled',
 		exports : 'named'
 	}, {
 		transpile : true
