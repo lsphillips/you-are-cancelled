@@ -120,6 +120,8 @@ This module is available through the Node Package Manager (NPM):
 npm install you-are-cancelled
 ```
 
+**Please Note:** Versions of Node lower than **v12.0.0** are not supported.
+
 ## Development
 
 ### Building
