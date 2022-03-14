@@ -1,6 +1,6 @@
 import { use, expect }                                                            from 'chai';
 import asPromised                                                                 from 'chai-as-promised';
-import sinon                                                                      from 'sinon';
+import { spy, assert, match }                                                     from 'sinon';
 import { CancellationToken, CancellationTokenSource, OperationCancellationError } from '../src/you-are-cancelled.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -102,8 +102,8 @@ describe('You Are Cancelled', function ()
 			{
 				it('that will be executed when a cancellation has been requested', function ()
 				{
-					const a = sinon.spy();
-					const b = sinon.spy();
+					const a = spy();
+					const b = spy();
 
 					// Setup.
 					this.token.register(a);
@@ -113,13 +113,13 @@ describe('You Are Cancelled', function ()
 					this.cancellationTokenSource.cancel();
 
 					// Assert.
-					sinon.assert.called(a);
-					sinon.assert.called(b);
+					assert.called(a);
+					assert.called(b);
 				});
 
 				it('that will be executed with an `OperationCancellationError`', function ()
 				{
-					const onCancel = sinon.spy();
+					const onCancel = spy();
 
 					// Setup.
 					this.token.register(onCancel);
@@ -128,19 +128,19 @@ describe('You Are Cancelled', function ()
 					this.cancellationTokenSource.cancel();
 
 					// Assert.
-					sinon.assert.calledWithMatch(onCancel, sinon.match.instanceOf(
+					assert.calledWithMatch(onCancel, match.instanceOf(
 						OperationCancellationError
 					));
 
 					// Assert.
-					sinon.assert.calledWithMatch(onCancel, sinon.match.has(
+					assert.calledWithMatch(onCancel, match.has(
 						'message', 'The operation was cancelled.'
 					));
 				});
 
 				it('that will be executed with an `OperationCancellationError` with a message matching the cancellation reason', function ()
 				{
-					const onCancel = sinon.spy();
+					const onCancel = spy();
 
 					// Setup.
 					this.token.register(onCancel);
@@ -149,20 +149,20 @@ describe('You Are Cancelled', function ()
 					this.cancellationTokenSource.cancel('This a test error message.');
 
 					// Assert.
-					sinon.assert.calledWithMatch(onCancel, sinon.match.instanceOf(
+					assert.calledWithMatch(onCancel, match.instanceOf(
 						OperationCancellationError
 					));
 
 					// Assert.
-					sinon.assert.calledWithMatch(onCancel, sinon.match.has(
+					assert.calledWithMatch(onCancel, match.has(
 						'message', 'This a test error message.'
 					));
 				});
 
 				it('that I can later deregiser', function ()
 				{
-					const a = sinon.spy();
-					const b = sinon.spy();
+					const a = spy();
+					const b = spy();
 
 					// Setup.
 					this.token.register(a);
@@ -175,15 +175,15 @@ describe('You Are Cancelled', function ()
 					this.cancellationTokenSource.cancel();
 
 					// Assert.
-					sinon.assert.notCalled(a);
+					assert.notCalled(a);
 
 					// Assert.
-					sinon.assert.called(b);
+					assert.called(b);
 				});
 
 				it('that I can later deregiser even during a cancellation request', function ()
 				{
-					const onCancel = sinon.spy();
+					const onCancel = spy();
 
 					// Setup.
 					this.token.register(() =>
@@ -198,12 +198,12 @@ describe('You Are Cancelled', function ()
 					this.cancellationTokenSource.cancel();
 
 					// Assert.
-					sinon.assert.notCalled(onCancel);
+					assert.notCalled(onCancel);
 				});
 
 				it('that will execute immediately if a cancellation has already been requested', function ()
 				{
-					const onCancel = sinon.spy();
+					const onCancel = spy();
 
 					// Setup.
 					this.cancellationTokenSource.cancel();
@@ -212,12 +212,12 @@ describe('You Are Cancelled', function ()
 					this.token.register(onCancel);
 
 					// Assert.
-					sinon.assert.called(onCancel);
+					assert.called(onCancel);
 				});
 
 				it('that will only execute once', function ()
 				{
-					const onCancel = sinon.spy();
+					const onCancel = spy();
 
 					// Setup.
 					this.token.register(onCancel);
@@ -227,7 +227,7 @@ describe('You Are Cancelled', function ()
 					this.cancellationTokenSource.cancel();
 
 					// Assert.
-					sinon.assert.callCount(onCancel, 1);
+					assert.callCount(onCancel, 1);
 				});
 			});
 
