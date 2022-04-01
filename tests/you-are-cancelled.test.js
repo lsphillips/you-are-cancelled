@@ -333,11 +333,11 @@ describe('You Are Cancelled', function ()
 					await AbortControllerSimulator.restore();
 				});
 
-				it('so will result in `undefined` when a conversion is attempted', function ()
+				it('so will result in `null` when a conversion is attempted', function ()
 				{
 					expect(
 						new CancellationTokenSource().token.toAbortSignal()
-					).to.be.undefined;
+					).to.be.null;
 				});
 			});
 		});

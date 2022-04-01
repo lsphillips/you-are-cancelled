@@ -142,7 +142,7 @@ This module was developed before the [Abort Controller Interface](https://develo
 const signal = token.toAbortSignal();
 ```
 
-**Important:** This will return `undefined` in a runtime environment where `AbortController` is not yet supported; it is your responsibility to polyfill that interface if you need to.
+**Important:** This will return `null` in a runtime environment where `AbortController` is not yet supported; it is your responsibility to polyfill that interface if you need to.
 
 ## Getting started
 

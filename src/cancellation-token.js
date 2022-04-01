@@ -97,7 +97,7 @@ export default class CancellationToken
 
 	toAbortSignal ()
 	{
-		return this.#aborter?.signal;
+		return this.#aborter ? this.#aborter.signal : null;
 	}
 
 	then (onFulfilled, onRejected)
@@ -121,7 +121,10 @@ export default class CancellationToken
 				new OperationCancellationError(this.#reason)
 			));
 
-			this.#aborter?.abort(reason);
+			if (this.#aborter)
+			{
+				this.#aborter.abort(reason);
+			}
 		}
 	}
 }
