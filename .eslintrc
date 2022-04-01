@@ -9,7 +9,7 @@
 	"globals" :
 	{
 		"AbortController" : "writable",
-		"AbortSignal"     : "writable"
+		"AbortSignal" : "writable"
 	},
 
 	"root" : true

@@ -7,6 +7,6 @@
 	"env" :
 	{
 		"mocha" : true,
-		"node"  : true
+		"node" : true
 	}
 }
