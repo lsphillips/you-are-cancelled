@@ -62,6 +62,28 @@ token.register(function (error)
 
 **Important:** If a cancellation has already been requested, the callback will be executed immediately.
 
+It is important that you deregister the callback when the operation completes. Otherwise you may have a potential memory leak, or face unexpected errors because a cancellation request will still execute your callback. You can achieve this easily like this:
+
+``` js
+const callback = token.register(function ()
+{
+  // Clean up...
+});
+
+try
+{
+  // Perform operation.
+}
+catch (error)
+{
+  // Handle errors.
+}
+finally
+{
+  token.deregister(callback);
+}
+```
+
 #### Handling cancellation requests
 
 The cancellation token is also a `thenable` object, so you can race it against other promises:
@@ -84,9 +106,9 @@ catch (error)
 }
 ```
 
-The cancellation token will never resolve; it will only ever be pending or rejected. When a cancellation is requested, the token is rejected with an `OperationCancellationError` with a message that matches the reason provided during the said cancellation request.
+The cancellation token will never resolve; it will only ever be pending or rejected. When a cancellation is requested, the token is rejected with an `OperationCancellationError` with a message that matches the reason provided when said cancellation was requested.
 
-Furthermore, you can throw an `OperationCancellationError` if a cancellation has already been requested:
+In addition, you can throw an `OperationCancellationError` if a cancellation has already been requested:
 
 ``` js
 token.throwIfCancellationRequested();
@@ -109,14 +131,24 @@ Each cancellation token has the following state associated with it:
 
 | Flag                      | Description                                                                                                                                                                       |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `canBeCancelled`          | Indicates whether the token is capable of being in a cancelled state. Normally this will be `true`, but for the `CancellationToken.None` dummy token this will always be `false`. |
+| `isCancelable`            | Indicates whether the token is capable of being in a cancelled state. Normally this will be `true`, but for the `CancellationToken.None` dummy token this will always be `false`. |
 | `isCancellationRequested` | Indicates whether a cancellation has been requested. For the `CancellationToken.None` dummy token this will always be `false`.                                                    |
+
+#### Abort Signals
+
+This module was developed before the [Abort Controller Interface](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) was introduced. To make the migration simpler, or if you simply prefer using this module, a `CancellationToken` can be converted to an `AbortSignal`:
+
+``` js
+const signal = token.toAbortSignal();
+```
+
+**Important:** This will return `undefined` in a runtime environment where `AbortController` is not yet supported; it is your responsibility to polyfill that interface if you need to.
 
 ## Getting started
 
 This module is available through the Node Package Manager (NPM):
 
-``` sh
+``` bash
 npm install you-are-cancelled
 ```
 
@@ -128,7 +160,7 @@ npm install you-are-cancelled
 
 You can build UMD and ESM versions of this module that are minified:
 
-``` sh
+``` bash
 npm run build
 ```
 
@@ -136,7 +168,7 @@ npm run build
 
 This module also has a robust test suite:
 
-``` sh
+``` bash
 npm test
 ```
 

@@ -2,6 +2,20 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] (2022-04-01)
+
+### Changed
+
+- Replaced `CancellationToken#canBeCancelled` with `CancellationToken#isCancelable`.
+- Cancellation callbacks will be cleaned up after they are executed during a cancellation request.
+- Cancellation callbacks that will be executed are determined **before** any are executed. This means attempting to deregister a cancellation callback during a cancellation request will be ignored.
+- Updated `CancellationToken#register()` to return the callback function being registered.
+
+### Added
+
+- Introduced `CancellationToken#toAbortSignal()` that will return an `AbortSignal` object that reflects the cancellation state of the token.
+- Introduced `CancellationToken#reason` that will reflect the reason for why the cancellation was requested.
+
 ## [1.3.0] (2021-05-16)
 
 ### Changed

@@ -1,32 +1,25 @@
-import CancellationToken          from './cancellation-token.js';
-import OperationCancellationError from './operation-cancellation-error.js';
+import CancellationToken, { Cancel } from './cancellation-token.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 export default class CancellationTokenSource
 {
-	constructor ()
-	{
-		Object.defineProperty(this, 'isCancellationRequested', {
-			value : false, writable : true
-		});
+	#token = new CancellationToken({
+		canBeCancelled : true
+	});
 
-		Object.defineProperty(this, 'token', {
-			value : new CancellationToken(this)
-		});
+	get token ()
+	{
+		return this.#token;
+	}
+
+	get isCancellationRequested ()
+	{
+		return this.#token.isCancellationRequested;
 	}
 
 	cancel (reason)
 	{
-		if (this.isCancellationRequested)
-		{
-			return;
-		}
-
-		this.isCancellationRequested = true;
-
-		this.token.callbacks.forEach(callback => callback(
-			new OperationCancellationError(reason)
-		));
+		this.token[Cancel](reason);
 	}
 }

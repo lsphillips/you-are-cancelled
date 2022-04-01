@@ -6,5 +6,11 @@
 		"es6" : true
 	},
 
+	"globals" :
+	{
+		"AbortController" : "writable",
+		"AbortSignal"     : "writable"
+	},
+
 	"root" : true
 }
