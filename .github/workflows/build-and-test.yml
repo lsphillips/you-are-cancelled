@@ -23,6 +23,7 @@ jobs:
         node:
           - '14'
           - '16'
+          - '18'
 
     name: Build and Test on Node v${{ matrix.node }}
 
