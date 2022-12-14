@@ -1,7 +1,7 @@
 # You Are Cancelled
 
 [![Available from NPM](https://img.shields.io/npm/v/you-are-cancelled.svg?maxAge=900)](https://www.npmjs.com/package/you-are-cancelled)
-[![Built using GitHub Action](https://github.com/lsphillips/YouAreCancelled/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/lsphillips/YouAreCancelled/actions)
+[![Built using GitHub Action](https://github.com/lsphillips/YouAreCancelled/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/lsphillips/YouAreCancelled/actions)
 
 An implementation of the cooperative cancellation model that is heavily inspired by the [.NET implementation](https://docs.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads).
 
