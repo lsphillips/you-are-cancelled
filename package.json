@@ -33,7 +33,7 @@
         "chai" : "4.4.1",
         "chai-as-promised" : "7.1.2",
         "mocha" : "10.4.0",
-        "sinon" : "17.0.1",
+        "sinon" : "18.0.0",
         "abort-controller" : "3.0.0",
 		"eslint" : "8.57.0",
 		"eslint-plugin-import" : "2.29.1",
