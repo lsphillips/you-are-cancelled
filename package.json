@@ -1,7 +1,7 @@
 {
 	"name" : "you-are-cancelled",
 
-	"version" : "2.0.0",
+	"version" : "2.0.1",
 
     "type" : "module",
 
@@ -21,11 +21,11 @@
 		"promise"
 	],
 
-	"homepage" : "https://github.com/lsphillips/YouAreCancelled",
+	"homepage" : "https://github.com/lsphillips/you-are-cancelled",
 
 	"bugs" :
 	{
-		"url" : "https://github.com/lsphillips/YouAreCancelled/issues"
+		"url" : "https://github.com/lsphillips/you-are-cancelled/issues"
 	},
 
 	"devDependencies" :
@@ -81,7 +81,7 @@
 	"repository" :
 	{
 		"type" : "git",
-		"url" : "https://github.com/lsphillips/YouAreCancelled.git"
+		"url" : "https://github.com/lsphillips/you-are-cancelled.git"
 	},
 
 	"scripts" :
