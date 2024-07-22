@@ -42,7 +42,7 @@
 		"eslint-config-protect-me-from-my-stupidity" : "10.1.1",
         "@babel/core" : "7.24.9",
         "@babel/preset-env" : "7.24.8",
-        "rollup" : "4.18.1",
+        "rollup" : "4.19.0",
 		"@rollup/plugin-terser" : "0.4.4",
         "@rollup/plugin-babel" : "6.0.4"
 	},
