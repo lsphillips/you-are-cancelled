@@ -104,7 +104,7 @@ export default class CancellationToken
 	{
 		if (this.#isCancelable)
 		{
-			return this.#promise.then(onFulfilled, onRejected);
+			return this.#promise.then(onFulfilled, onRejected); // eslint-disable-line promise/prefer-catch
 		}
 
 		return this;

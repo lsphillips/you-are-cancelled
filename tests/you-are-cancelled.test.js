@@ -1,23 +1,29 @@
-import { use, expect }                                                            from 'chai';
-import asPromised                                                                 from 'chai-as-promised';
-import { spy, assert, match }                                                     from 'sinon';
-import * as AbortControllerSimulator                                              from './support/abort-controller-simulator.js';
-import { CancellationToken, CancellationTokenSource, OperationCancellationError } from '../src/you-are-cancelled.js';
+import {
+	describe,
+	it,
+	before,
+	after
+} from 'node:test';
+import assert from 'node:assert';
+import {
+	removeAbortSignalSupport,
+	restoreAbortSignalSupport
+} from './support/abort-signal.js';
+import {
+	CancellationToken,
+	CancellationTokenSource,
+	OperationCancellationError
+} from '../src/you-are-cancelled.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 describe('You Are Cancelled', function ()
 {
-	before(function ()
-	{
-		use(asPromised);
-	});
-
 	describe('when I create a cancellation token source', function ()
 	{
 		it('I should initially see that no cancellation has been requested', function ()
 		{
-			expect(new CancellationTokenSource().isCancellationRequested).to.be.false;
+			assert.strictEqual(new CancellationTokenSource().isCancellationRequested, false);
 		});
 
 		it('I should see that a cancellation has been requested after I have requested it', function ()
@@ -29,29 +35,29 @@ describe('You Are Cancelled', function ()
 			source.cancel();
 
 			// Assert.
-			expect(source.isCancellationRequested).to.be.true;
+			assert.strictEqual(source.isCancellationRequested, true);
 		});
 
 		describe('I should have access to a token', function ()
 		{
 			it('that is a `CancellationToken`', function ()
 			{
-				expect(new CancellationTokenSource().token).to.be.instanceOf(CancellationToken);
+				assert.ok(new CancellationTokenSource().token instanceof CancellationToken);
 			});
 
 			it('that is cancellable', function ()
 			{
-				expect(new CancellationTokenSource().token.isCancelable).to.be.true;
+				assert.strictEqual(new CancellationTokenSource().token.isCancelable, true);
 			});
 
 			it('that initially tells me that no cancellation has been requested', function ()
 			{
-				expect(new CancellationTokenSource().token.isCancellationRequested).to.be.false;
+				assert.strictEqual(new CancellationTokenSource().token.isCancellationRequested, false);
 			});
 
 			it('that initially tells me no reason for cancellation', function ()
 			{
-				expect(new CancellationTokenSource().token.reason).to.be.null;
+				assert.strictEqual(new CancellationTokenSource().token.reason, null);
 			});
 
 			describe('that is `thenable`', function ()
@@ -65,7 +71,7 @@ describe('You Are Cancelled', function ()
 					source.cancel();
 
 					// Assert.
-					await expect(source.token).to.eventually.be.rejectedWith(OperationCancellationError, 'The operation was cancelled.');
+					await assert.rejects(async () => await source.token, OperationCancellationError);
 				});
 
 				it('and will be rejected with an `OperationCancellationError` with a message matching the cancellation reason', async function ()
@@ -77,7 +83,7 @@ describe('You Are Cancelled', function ()
 					source.cancel('This a test error message.');
 
 					// Assert.
-					await expect(source.token).to.eventually.be.rejectedWith(OperationCancellationError, 'This a test error message.');
+					await assert.rejects(async () => await source.token, OperationCancellationError);
 				});
 
 				it('and can be raced against another promise', async function ()
@@ -98,81 +104,87 @@ describe('You Are Cancelled', function ()
 					source.cancel();
 
 					// Assert.
-					await expect(race).to.to.eventually.be.rejectedWith(OperationCancellationError);
+					await assert.rejects(race, OperationCancellationError);
 				});
 			});
 
 			describe('that allows me to register a callback', function ()
 			{
-				it('that will be executed when a cancellation has been requested', function ()
+				it('that will be executed when a cancellation has been requested', function ({
+					mock
+				})
 				{
 					// Setup.
 					const source = new CancellationTokenSource();
 
 					// Setup.
-					const a = source.token.register(spy());
-					const b = source.token.register(spy());
+					const a = source.token.register(mock.fn());
+					const b = source.token.register(mock.fn());
 
 					// Act.
 					source.cancel();
 
 					// Assert.
-					assert.called(a);
-					assert.called(b);
+					assert.strictEqual(a.mock.callCount(), 1);
+					assert.strictEqual(b.mock.callCount(), 1);
 				});
 
-				it('that will be executed with an `OperationCancellationError`', function ()
+				it('that will be executed with an `OperationCancellationError`', function ({
+					mock
+				})
 				{
 					// Setup.
 					const source = new CancellationTokenSource();
 
 					// Setup.
-					const onCancel = source.token.register(spy());
+					const onCancel = source.token.register(mock.fn());
 
 					// Act.
 					source.cancel();
 
 					// Assert.
-					assert.calledWithMatch(onCancel, match.instanceOf(
-						OperationCancellationError
-					));
+					const error = onCancel.mock.calls[0].arguments[0];
 
 					// Assert.
-					assert.calledWithMatch(onCancel, match.has(
-						'message', 'The operation was cancelled.'
-					));
+					assert.ok(error instanceof OperationCancellationError);
+
+					// Assert.
+					assert.strictEqual(error.message, 'The operation was cancelled.');
 				});
 
-				it('that will be executed with an `OperationCancellationError` with a message matching the cancellation reason', function ()
+				it('that will be executed with an `OperationCancellationError` with a message matching the cancellation reason', function ({
+					mock
+				})
 				{
 					// Setup.
 					const source = new CancellationTokenSource();
 
 					// Setup.
-					const onCancel = source.token.register(spy());
+					const onCancel = source.token.register(mock.fn());
 
 					// Act.
 					source.cancel('This a test error message.');
 
 					// Assert.
-					assert.calledWithMatch(onCancel, match.instanceOf(
-						OperationCancellationError
-					));
+					const error = onCancel.mock.calls[0].arguments[0];
 
 					// Assert.
-					assert.calledWithMatch(onCancel, match.has(
-						'message', 'This a test error message.'
-					));
+					assert.ok(error instanceof OperationCancellationError);
+
+					// Assert.
+					assert.strictEqual(error.message, 'This a test error message.');
 				});
 
-				it('that I can later deregister', function ()
+				it('that I can later deregister', function ({
+					mock
+				})
 				{
 					// Setup.
 					const source = new CancellationTokenSource();
 
 					// Setup.
-					const a = source.token.register(spy());
-					const b = source.token.register(spy());
+					const a = source.token.register(mock.fn());
+					const b = source.token.register(mock.fn());
 
 					// Act.
 					source.token.deregister(a);
@@ -181,13 +193,13 @@ describe('You Are Cancelled', function ()
 					source.cancel();
 
 					// Assert.
-					assert.notCalled(a);
-
-					// Assert.
-					assert.called(b);
+					assert.strictEqual(a.mock.callCount(), 0);
+					assert.strictEqual(b.mock.callCount(), 1);
 				});
 
-				it('that will execute immediately if a cancellation has already been requested', function ()
+				it('that will execute immediately if a cancellation has already been requested', function ({
+					mock
+				})
 				{
 					// Setup.
 					const source = new CancellationTokenSource();
@@ -196,26 +208,28 @@ describe('You Are Cancelled', function ()
 					source.cancel();
 
 					// Act.
-					const onCancel = source.token.register(spy());
+					const onCancel = source.token.register(mock.fn());
 
 					// Assert.
-					assert.called(onCancel);
+					assert.strictEqual(onCancel.mock.callCount(), 1);
 				});
 
-				it('that will only execute once', function ()
+				it('that will only execute once', function ({
+					mock
+				})
 				{
 					// Setup.
 					const source = new CancellationTokenSource();
 
 					// Setup.
-					const onCancel = source.token.register(spy());
+					const onCancel = source.token.register(mock.fn());
 
 					// Act.
 					source.cancel();
 					source.cancel();
 
 					// Assert.
-					assert.callCount(onCancel, 1);
+					assert.strictEqual(onCancel.mock.callCount(), 1);
 				});
 			});
 
@@ -228,19 +242,16 @@ describe('You Are Cancelled', function ()
 				source.cancel();
 
 				// Act & Assert.
-				expect(() =>
+				assert.throws(() =>
 				{
 					source.token.throwIfCancellationRequested();
-				}).to.throw(OperationCancellationError);
+
+				}, OperationCancellationError);
 			});
 
 			it('that will not throw an error if a cancellation has not already been requested', function ()
 			{
-				expect(() =>
-				{
-					new CancellationTokenSource().token.throwIfCancellationRequested();
-
-				}).to.not.throw(OperationCancellationError);
+				new CancellationTokenSource().token.throwIfCancellationRequested();
 			});
 
 			it('that tells me that a cancellation has been requested after I have requested it', function ()
@@ -252,7 +263,7 @@ describe('You Are Cancelled', function ()
 				source.cancel();
 
 				// Assert.
-				expect(source.token.isCancellationRequested).to.be.true;
+				assert.strictEqual(source.token.isCancellationRequested, true);
 			});
 
 			it('that tells me the reason for cancellation that I gave when requesting it', function ()
@@ -264,33 +275,21 @@ describe('You Are Cancelled', function ()
 				source.cancel('This a test error message.');
 
 				// Assert.
-				expect(source.token.reason).to.equal('This a test error message.');
+				assert.strictEqual(source.token.reason, 'This a test error message.');
 			});
 
 			describe('that can be converted into an `AbortSignal` object if the environment supports it', function ()
 			{
-				before(async function ()
-				{
-					await AbortControllerSimulator.simulate({
-						supported : true
-					});
-				});
-
-				after(async function ()
-				{
-					await AbortControllerSimulator.restore();
-				});
-
 				it('that has not yet emitted an abort signal', function ()
 				{
 					// Act.
 					const signal = new CancellationTokenSource().token.toAbortSignal();
 
 					// Assert.
-					expect(signal).to.be.instanceOf(AbortSignal);
+					assert.ok(signal instanceof AbortSignal);
 
 					// Assert.
-					expect(signal.aborted).to.be.false;
+					assert.strictEqual(signal.aborted, false);
 				});
 
 				it('that will be the same abort signal each time', function ()
@@ -299,9 +298,8 @@ describe('You Are Cancelled', function ()
 					const source = new CancellationTokenSource();
 
 					// Act & Assert.
-					expect(
-						source.token.toAbortSignal()
-					).to.equal(
+					assert.strictEqual(
+						source.token.toAbortSignal(),
 						source.token.toAbortSignal()
 					);
 				});
@@ -315,29 +313,27 @@ describe('You Are Cancelled', function ()
 					source.cancel();
 
 					// Assert.
-					expect(source.token.toAbortSignal().aborted).to.be.true;
+					assert.strictEqual(source.token.toAbortSignal().aborted, true);
 				});
 			});
 
 			describe('that cannot be converted into an `AbortSignal` object when the environment does not support it', function ()
 			{
-				before(async function ()
+				before(function ()
 				{
-					await AbortControllerSimulator.simulate({
-						supported : false
-					});
+					removeAbortSignalSupport();
 				});
 
-				after(async function ()
+				after(function ()
 				{
-					await AbortControllerSimulator.restore();
+					restoreAbortSignalSupport();
 				});
 
 				it('so will result in `null` when a conversion is attempted', function ()
 				{
-					expect(
-						new CancellationTokenSource().token.toAbortSignal()
-					).to.be.null;
+					assert.strictEqual(
+						new CancellationTokenSource().token.toAbortSignal(), null
+					);
 				});
 			});
 		});
@@ -347,17 +343,17 @@ describe('You Are Cancelled', function ()
 	{
 		it('that is a `CancellationToken`', function ()
 		{
-			expect(CancellationToken.None).to.be.instanceOf(CancellationToken);
+			assert.ok(CancellationToken.None instanceof CancellationToken);
 		});
 
 		it('that is not cancellable', function ()
 		{
-			expect(CancellationToken.None.isCancelable).to.be.false;
+			assert.strictEqual(CancellationToken.None.isCancelable, false);
 		});
 
 		it('that tells me that no cancellation has been requested', function ()
 		{
-			expect(CancellationToken.None.isCancellationRequested).to.be.false;
+			assert.strictEqual(CancellationToken.None.isCancellationRequested, false);
 		});
 	});
 });
