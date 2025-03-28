@@ -20,5 +20,17 @@ export default [
 			}
 		}
 	},
+	{
+		files : [
+			'tests/support/abort-signal.js'
+		],
+
+		languageOptions :
+		{
+			globals : {
+				'global' : false
+			}
+		}
+	},
 	...protectMeFromMyStupidity()
 ];

@@ -30,11 +30,6 @@
 
 	"devDependencies" :
 	{
-        "chai" : "5.2.0",
-        "chai-as-promised" : "8.0.1",
-        "mocha" : "10.8.2",
-        "sinon" : "19.0.2",
-        "abort-controller" : "3.0.0",
 		"eslint" : "9.23.0",
 		"eslint-config-protect-me-from-my-stupidity" : "15.0.0",
         "@babel/core" : "7.26.10",
@@ -84,7 +79,7 @@
 	"scripts" :
 	{
 		"test:lint" : "eslint \"**/*.js\"",
-		"test:unit" : "mocha \"tests/**/*.test.js\"",
+		"test:unit" : "node --test",
         "test" : "npm run test:lint && npm run test:unit",
         "build" : "rollup --config",
         "prepack" : "npm run test && npm run build"
