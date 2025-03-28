@@ -28,7 +28,7 @@ export default [
 		languageOptions :
 		{
 			globals : {
-				'global' : false
+				'global' : 'readonly'
 			}
 		}
 	},
